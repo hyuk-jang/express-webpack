@@ -52,8 +52,9 @@ module.exports = {
     new CleanWebPackPlugin([OUTPUT_PATH]),
     new HtmlWebPackPlugin({
       template: './src/views/index.html',
-      filename: './index.html',
-      excludeChunks: ['server']
-    })
+      filename: './index.html'
+      // excludeChunks: ['server']
+    }),
+    new webpack.NoEmitOnErrorsPlugin()
   ]
 };
