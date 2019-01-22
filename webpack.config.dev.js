@@ -8,12 +8,16 @@ const OUTPUT_PATH = 'dist';
 module.exports = {
   mode: 'development',
   entry: {
-    main: './src/index.js'
+    main: [
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './src/index.js'
+    ]
   },
   output: {
     path: path.resolve(__dirname, OUTPUT_PATH),
     publicPath: '/',
-    filename: '[name].js'
+    filename: '[name].js',
+    globalObject: 'this'
   },
   target: 'web',
   devtool: '#source-map',
@@ -55,6 +59,7 @@ module.exports = {
       filename: './index.html'
       // excludeChunks: ['server']
     }),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ]
 };
