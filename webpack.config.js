@@ -7,14 +7,14 @@ const CleanWebPackPlugin = require('clean-webpack-plugin');
 const OUTPUT_PATH = 'dist';
 
 module.exports = {
-  entry: './src/server.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, OUTPUT_PATH),
     filename: '[name].bundle.js'
   },
+  target: 'web',
   devtool: 'inline-source-map',
   externals: [nodeExternals()],
-  target: 'node',
   node: {
     // Need this when working with express, otherwise the build fails
     __dirname: false, // if you don't put this is, __dirname
@@ -35,6 +35,24 @@ module.exports = {
         // Entry point is set below in HtmlWebPackPlugin in Plugins
         test: /\.html$/,
         use: [{ loader: 'html-loader' }]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: require.resolve('css-loader'),
+            options: {
+              importLoaders: 1,
+              modules: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ['file-loader']
       }
     ]
   },
@@ -42,7 +60,10 @@ module.exports = {
     new CleanWebPackPlugin([OUTPUT_PATH]),
     new HtmlWebPackPlugin({
       title: 'Web Pack V4',
-      template: path.resolve(__dirname, 'src', 'index.html')
+      // template: path.resolve(__dirname, 'src', 'index.html'),
+      template: path.resolve(__dirname, 'src', 'views', 'index.html'),
+      filename: './index.html',
+      excludeChunks: ['server']
     })
   ]
 };
