@@ -10,7 +10,7 @@ module.exports = {
   entry: './src/server.js',
   output: {
     path: path.resolve(__dirname, OUTPUT_PATH),
-    filename: '[name].bundle.js'
+    filename: '[name].js'
   },
   devtool: 'inline-source-map',
   externals: [nodeExternals()],
