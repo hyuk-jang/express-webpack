@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "nodemon ./src/server.js",
-    "start:dist": "nodemon ./dist/main.bundle.js",
+    "start-dist": "nodemon ./dist/main.bundle.js",
     "build": "webpack --mode development"
   },
   "dependencies": {
